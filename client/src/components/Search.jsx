@@ -5,10 +5,11 @@ function Search ({search}) {
   const [term, setTerm] = useState('');
 
   function onChange (e) {
-    console.log(e.target);
-    // setTerm(e.target.value);
+    let value = e.target.value;
+     setTerm(value);
   }
-  function handleSearch() {
+  function handleClick() {
+
     search(term);
     setTerm('');
   }
@@ -17,7 +18,7 @@ function Search ({search}) {
     <div>
       <h4>Add more repos!</h4>
       Enter a github username: <input value={term} onChange={onChange} />
-      <button onClick={search}> Add Repos </button>
+      <button onClick={handleClick}> Add Repos </button>
     </div>
   )
 }

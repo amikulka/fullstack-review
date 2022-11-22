@@ -13,22 +13,13 @@ app.get('/', (req, res) => {
 })
 
 app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
-
-  //get username from req
-  console.log(req.body.username);
-
-  // getReposByUsername(req.body.username).
-  //   then(repos => {
-  //     return save(repos);
-  //   })
-  //   .then(() => {
-  //     res.send('added!');
-  //   })
-  res.send();
+  getReposByUsername(req.body.username)
+    .then(repos => {
+      return save(repos);
+    })
+    .then(() => {
+      res.send('added!');
+    })
 
 });
 
@@ -38,6 +29,9 @@ app.get('/repos', function (req, res) {
       return results.sort((a, b) => b['watchers_count'] - a['watchers_count']).slice(0, 25);
     })
     .then(toDisplay => {
+
+      toDisplay = JSON.stringify(toDisplay);
+      res.setHeader('Content-Type', 'application/json')
       res.send(toDisplay);
     })
 });
