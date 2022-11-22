@@ -1,10 +1,13 @@
 import React from 'react';
 
-const RepoList = (props) => (
+function RepoList ({repos}) {
+  return (
   <div>
     <h4> Repo List Component </h4>
-    There are {props.repos.length} repos.
+    There are {repos} repos.
   </div>
-)
+);
+
+}
 
 export default RepoList;
