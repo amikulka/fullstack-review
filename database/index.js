@@ -1,5 +1,8 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
+mongoose.set('useNewUrlParser', true);
+mongoose.connect(process.env.MONGODB_URI)
+
 
 
 let repoSchema = mongoose.Schema({
