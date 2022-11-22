@@ -6,7 +6,7 @@ let repoSchema = mongoose.Schema({
   id: {type: Number, unique: true},
   name: String,
   owner: {
-    username: String,
+    login: String,
     id: Number,
     html_url: String
   },
@@ -17,29 +17,8 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 let save = (repos) => {
-  repos = repos.map(repoToInsert => {
-    return new Repo({
-      id: repoToInsert.id,
-      name: repoToInsert.name,
-      owner: {
-        username: repoToInsert.owner.login,
-        id: repoToInsert.owner.id,
-        html_url: repoToInsert.owner['html_url']
-      },
-      html_url: repoToInsert['html_url'],
-      watchers_count: repoToInsert['watchers_count']
-    });
-  });
-
   return Promise.all(repos.map(repo => {
-    Repo.exists({id: repo.id})
-      .then(doesExist => {
-        if (!doesExist) {
-          return repo.save()
-        } else {
-          return;
-        }
-      })
+    return Repo.findOneAndUpdate({id: repo.id}, repo, {upsert: true})
   }))
   .catch(err => {
     console.log(err);

@@ -2,6 +2,7 @@ const express = require('express');
 const path = require ('path');
 const {save, retrieveAll} = require('../database');
 const {getReposByUsername} = require('../helpers/github.js');
+require('dotenv').config();
 
 let app = express();
 app.use(express.json())
@@ -36,8 +37,8 @@ app.get('/repos', function (req, res) {
     })
 });
 
-let port = 1128;
 
-app.listen(port, function() {
-  console.log(`listening on port ${port}`);
+
+app.listen(process.env.PORT, function() {
+  console.log(`listening on port ${process.env.PORT}`);
 });
